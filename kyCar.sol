@@ -1,6 +1,6 @@
 contract KYCar is Ownable, KYC {
     mapping(address => CarDetail[]) carDetails;
-    address[] senderAccounts;
+    address[] personAccounts;
 
     struct CarDetail {
         bytes8 license_plate;
@@ -15,6 +15,11 @@ contract KYCar is Ownable, KYC {
         bytes1 status;
     }
 
+    modifier AdminSenderHavecars(address sender, uint index) {
+        require (index <= carDetails[sender].length);
+        _;
+    }
+    
     function addCarDetails (
         bytes8 license_plate,
         bytes32 brand,
@@ -44,7 +49,7 @@ contract KYCar is Ownable, KYC {
         }));
     
         if (carDetails[msg.sender].length == 1) {
-            senderAccounts.push(msg.sender);
+            personAccounts.push(msg.sender);
         }
         
         return true;
@@ -85,6 +90,35 @@ contract KYCar is Ownable, KYC {
         carDetails[msg.sender][index].deposit,
         carDetails[msg.sender][index].amount_per_day
         );
+    }
+
+    function getAdminCarDetails(address sender, uint index) AdminSenderHavecars(sender, index) onlyOwner public constant returns(
+        bytes8 license_plate
+    ) {
+        return (
+            carDetails[sender][index].license_plate,
+            carDetails[sender][index].brand, 
+            carDetails[sender][index].model,
+            carDetails[sender][index].category, 
+            carDetails[sender][index].engine_size,
+            carDetails[sender][index].horse_power,
+            carDetails[sender][index].year
+        );
+    }
+
+    function getAdminCarAmounts(address sender, uint index) AdminSenderHavecars(sender, index) onlyOwner public constant returns(
+        uint deposit,
+        uint amount_per_day
+    ) {
+        require(index <= carDetails[msg.sender].length);
+       return ( 
+        carDetails[sender][index].deposit,
+        carDetails[sender][index].amount_per_day
+        );
+    }
+    
+    function getAdminSenders() onlyOwner view public returns (address[]) {
+        return personAccounts;
     }
     
 }

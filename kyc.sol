@@ -10,6 +10,11 @@ contract KYC is Ownable {
         bytes1 status;
     }
 
+    modifier checkPerson() {
+        require (personDetails[msg.sender].status == 'A');
+        _;
+    } 
+
     function addPersonDetails(bytes32 first_name, bytes32 last_name, bytes8 id_number) returns(bool) {
         require(personDetails[msg.sender].id_number == '');
 

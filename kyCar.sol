@@ -50,6 +50,10 @@ contract KYCar is Ownable, KYC {
         return true;
     }
 
+    function getCarCount() public constant returns(uint count) {
+        return carDetails[msg.sender].length;
+    }
+
     function getCarDetails(uint index) public constant returns(
         bytes8 license_plate,
         bytes32 brand,

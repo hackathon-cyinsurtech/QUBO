@@ -56,4 +56,17 @@ contract KYC is Ownable {
         return personAccounts;
     }
 
+    function setAdminPersonStatus(address sender,bytes1 status) onlyOwner returns(bool) {
+        require(status == 'A' || status == 'R' || status == 'P');
+
+        personDetails[sender].status = status;
+        return true;
+    }
+
+    function getPersonStatus() public constant returns(bytes1 status) {
+        require(personDetails[msg.sender].id_number != '');
+
+        return personDetails[msg.sender].status;
+    }
+
 }

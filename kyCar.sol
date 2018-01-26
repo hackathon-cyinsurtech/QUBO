@@ -50,4 +50,37 @@ contract KYCar is Ownable, KYC {
         return true;
     }
 
+    function getCarDetails(uint index) public constant returns(
+        bytes8 license_plate,
+        bytes32 brand,
+        bytes32 model,
+        bytes32 category,
+        bytes4 engine_size,
+        bytes8 horse_power,
+        uint year
+    ) {
+        require(index <= carDetails[msg.sender].length);
+
+        return (
+            carDetails[msg.sender][index].license_plate,
+            carDetails[msg.sender][index].brand, 
+            carDetails[msg.sender][index].model,
+            carDetails[msg.sender][index].category, 
+            carDetails[msg.sender][index].engine_size,
+            carDetails[msg.sender][index].horse_power,
+            carDetails[msg.sender][index].year
+        );
+    }
+    
+    function getCarAmounts(uint index) public constant returns(
+        uint deposit,
+        uint amount_per_day
+    ) {
+        require(index <= carDetails[msg.sender].length);
+       return ( 
+        carDetails[msg.sender][index].deposit,
+        carDetails[msg.sender][index].amount_per_day
+        );
+    }
+    
 }

@@ -1,0 +1,133 @@
+<div class="panel panel-brand-bg">
+    <div class="panel-split panel-split__inv">
+        <div class="panel-split-column panel-split-column__inv1">
+            <ul class="list-group list-group-trans">
+                <li class="list-group-item list-group-item__inv1"><span><i class="cc-ETH"></i> <span class="text-muted small">ethereum</span></span></li>
+                    <li class="list-group-item list-group-item__inv2">
+                        <p id="wallet_address">0x 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000</p><span class="text-muted">Ethereum id <small>(Ropsten Test Net)</small></span></li>
+                    <li class="list-group-item list-group-item__inv3"><span id="wallet_balance" class="badge badge-lg badge-trans">N/A</span> <span class="text-muted">Your balance</span></li>
+                    <li class="list-group-item list-group-item__inv4"><span class="badge badge-trans" id="invested">N/A</span>
+                        <p><span class="text-muted">Spend On Insurance</span></p><span class="badge badge-trans" id="projectedProfit">N/A</span>
+                        <p><span class="text-muted">Claims Up-To Date</span></p><span class="badge badge-trans" id="revenueReceived">N/A</span>
+                        <p><span class="text-muted">Claimed for accitends</span></p>
+                    </li>
+                </ul>
+            </div>
+            <div class="panel-split-column panel-split-column__inv2">
+                <div class="panel-body">
+                    <div class="canvas-wrapper">
+                            <div id="carousel-example-generic" class="carousel slide">
+
+<!-- Wrapper for slides -->
+<div class="carousel-inner" role="listbox">
+
+<!-- First slide -->
+<div class="item active deepskyblue">
+
+<div class="carousel-caption">
+<h3>
+  Insure My Car
+</h3>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Activate">
+Activate it now</button>
+<br >
+<h5>
+  or
+</h5>
+ <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#knowcar">Add Car (KYCar)</button>
+</div>
+</div> <!-- /.item -->
+
+</div><!-- /.carousel-inner -->
+
+</div><!-- /.carousel -->
+
+                       
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-3">
+                    <!--TODO: ADD this number to contract-->
+                    <p><span>Total insurance products:</span> <span class="text-primary">4</span></p>
+                    <p><span>Total policies:</span> <span id="totalInsurers" class="text-primary">20</span></p>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <p><span>Total spend amount</span> <span id="totalInvestedAmount" class="text-primary">10 ETH</span></p>
+                    <p><span>Total amount in reserves</span> <span id="totalContractBalance" class="text-primary">5 ETH</span></p>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                <p><span>Total Claims</span> <span id="totalInvestorsCount" class="text-primary">0</span></p>
+                    <p><span>Total paid for the claims</span> <span id="totalClaimsPaid" class="text-primary">0</span></p>
+                    
+                </div>
+                 <div class="col-xs-12 col-sm-3">
+                <p><span>Driving Behavior:</span> <span id="totalInvestorsCount" class="text-primary">Rookie</span></p>
+                    <p><span>Car Status (problems):</span> <span id="totalClaimsPaid" class="text-primary">0</span></p>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th valign="top">ID</th>
+                        <th valign="top">Insurance type:</th>
+                        <th valign="top">Insurance:</th>
+                        <th valign="top">Signed Policies:</th>
+                        <th valign="top">Duration:</th>
+                        <th valign="top">Amount to be paid <br>for the insurance:</th>
+                        <th valign="top" width="10%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="info">
+                        <td valign="middle"><span class="text-primary-2"><a href="https://ropsten.etherscan.io/address/0x554ab5f5fe7006223c2dd321b420e9a05d48ec93" target="_blank">0x554a...</a></span></td>
+                        <td valign="middle">Audi A5 2.0L</td>
+                        <td valign="middle" id="totalInvestorsCount_table">Gan Direct</td>
+                        <td valign="middle" id="totalInsurers_table">
+                            <a href="#policies" data-toggle="modal" data-target="#policies">256</a>
+                        </td>
+                        <!--TODO: Implement reserves in contract-->
+                        <td valign="middle" id="totalInvestedAmount_table">7 Days</td>
+                        <td valign="middle" id="totalClaimsPaid_table">10 ETH</td>
+                        <td valign="middle" class="cell-btn text-right has-table-control"><span class="btn btn-m btn-dashed">Ongoing</span></td>
+                    </tr>
+                     <tr>
+                        <td valign="middle"><span class="text-primary-2"><a href="https://ropsten.etherscan.io/address/0x554ab5f5fe7006223c2dd321b420e9a05d48ec93" target="_blank">0x554a...</a></span></td>
+                        <td valign="middle">Audi A5 2.0L</td>
+                        <td valign="middle" id="totalInvestorsCount_table">Gan Direct</td>
+                        <td valign="middle" id="totalInsurers_table">256</td>
+                        <!--TODO: Implement reserves in contract-->
+                        <td valign="middle" id="totalInvestedAmount_table">7 Days</td>
+                        <td valign="middle" id="totalClaimsPaid_table">10 ETH</td>
+                        <td valign="middle" class="cell-btn text-right has-table-control"><span class="btn btn-m btn-dashed">Ended</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Modals -->
+        <div id="generalModal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-m">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <h3 id="modalTitle" class="text-primary-2 text-center"></h3>
+                        <p id="modalText" style="word-wrap: break-word" class="text-left"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

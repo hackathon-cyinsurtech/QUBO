@@ -2,10 +2,17 @@
     <div class="panel-split panel-split__inv">
         <div class="panel-split-column panel-split-column__inv1">
             <ul class="list-group list-group-trans">
-                <li class="list-group-item list-group-item__inv1"><span><i class="cc-ETH"></i> <span class="text-muted small">ethereum</span></span></li>
+                <li class="list-group-item list-group-item__inv1">
+                    <span>
+                        <i class="cc-ETH"></i> 
+                        <span class="text-muted">Account Status:</span>
+                        <span *ngIf="personDetails" class="text-muted">Approved</span>
+                        <button *ngIf="!personDetails" class="btn btn-default" data-toggle="modal" data-target="#KYC-modal">Apply for KYC</button>
+                    </span>
+                </li>
                     <li class="list-group-item list-group-item__inv2">
-                        <p id="wallet_address">0x 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000</p><span class="text-muted">Ethereum id <small>(Ropsten Test Net)</small></span></li>
-                    <li class="list-group-item list-group-item__inv3"><span id="wallet_balance" class="badge badge-lg badge-trans">N/A</span> <span class="text-muted">Your balance</span></li>
+                        <p id="wallet_address">{{ wallet_address }}</p><span class="text-muted">Ethereum id <small>(Ropsten Test Net)</small></span></li>
+                    <li class="list-group-item list-group-item__inv3"><span id="wallet_balance" class="badge badge-lg badge-trans">Ξ {{ balance }}</span> <span class="text-muted">Your balance</span></li>
                     <li class="list-group-item list-group-item__inv4"><span class="badge badge-trans" id="invested">N/A</span>
                         <p><span class="text-muted">Spend On Insurance</span></p><span class="badge badge-trans" id="projectedProfit">N/A</span>
                         <p><span class="text-muted">Claims Up-To Date</span></p><span class="badge badge-trans" id="revenueReceived">N/A</span>
@@ -24,17 +31,17 @@
 <!-- First slide -->
 <div class="item active deepskyblue">
 
-<div class="carousel-caption">
+<div class="carousel-caption" *ngIf="personDetails">
 <h3>
   Insure My Car
 </h3>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Activate">
+<button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#Activate">
 Activate it now</button>
 <br >
 <h5>
   or
 </h5>
- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#knowcar">Add Car (KYCar)</button>
+ <button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#knowcar">Add Car (KYCar)</button>
 </div>
 </div> <!-- /.item -->
 
@@ -131,3 +138,135 @@ Activate it now</button>
             </div>
         </div>
     </div>
+
+<!-- Modal -->
+<div class="modal fade" id="Activate" tabindex="-1" role="dialog" aria-labelledby="invest" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title text-left" id="Activate">Personalize Insurance</h4>
+            </div>
+            <div class="modal-body">
+            <span>Car Collection</span>
+        <select class="form-control">
+            <option *ngFor="let approveCar of approveCars" value="{{approveCar.index}}">
+                {{approveCar.license_plate}} ({{approveCar.brand}} {{approveCar.model}})
+            </option>
+      </select>
+      <span>Start date:</span><input class="form-control" type="Date" name="DateInsure" />
+      <span>End date:</span><input class="form-control" type="Date" name="DateInsure" />
+      <br>
+      <span class="pull-right">Total Insurance Cost:</span>
+      <br>
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary">Insure It</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="KYC-modal" tabindex="-1" role="dialog" aria-labelledby="knowcustomer" aria-hidden="true"> 
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-left" id="knowcar">Apply for KYC</h4>
+            </div>
+            <form [formGroup]="addPersonForm" (submit)="addKYC()" class="container-form">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <span>First Name:</span>
+                        <input class="form-control" type="text" name="first_name" formControlName="first_name" required/>
+                    </div>
+                    <div class="form-group">
+                        <span>Last Name:</span>
+                        <input class="form-control" type="text" name="last_name" formControlName="last_name" required/>
+                    </div>
+                    <div class="form-group">
+                        <span>ID No.</span>
+                        <input class="form-control" type="text" name="id_number" formControlName="id_number" required/>
+                    </div>
+                    <div class="form-group">
+                        <span [ngClass]="personMessageClass">{{ personMessage }}</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <input [disabled]="!addPersonForm.valid"  class="btn btn-primary" type="submit" value="Add for Approval" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>     
+      
+<!-- Modal -->
+<div class="modal fade" id="knowcar" tabindex="-1" role="dialog" aria-labelledby="knowcar" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title text-left" id="knowcar">Create My Car Collection</h4>
+            </div>
+            <form [formGroup]="addCarForm" (submit)="addKYCar()" class="container-form">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <span>License Plate:</span>
+                        <input class="form-control" type="text" name="Lplates" formControlName="license_plate"/>
+                    </div>
+                    <div class="form-group">
+                        <span>Car Brand:</span>
+                        <select class="form-control" formControlName="brand" required>
+                            <option value="Car">Selecr My Car Brand</option>
+                            <option value="Audi">Audi</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <span>Car Model:</span>
+                        <select class="form-control" formControlName="model" required>
+                            <option value="Car">Selecr My Car Model</option>
+                            <option value="A1">A1</option>
+                            <option value="A3">A3</option>
+                            <option value="A5">A5</option>
+                            <option value="A6">A6</option>
+                            <option value="R8">R8</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <span>Car Category:</span>
+                        <select class="form-control" formControlName="category" required>
+                            <option value="Category">Selecr My Car Category</option>
+                            <option value="Saloon">Saloon</option>
+                            <option value="Coupe">Coupe</option>
+                            <option value="Convertible">Convertible</option>
+                            <option value="high Performance">High Performance</option>
+                            <option value="Smart">Smart Car</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <span>Engine Size:</span>
+                        <input class="form-control" formControlName="engine_size" type="number" name="Lplates" maxlength="70" placeholder="1.7L" required/>
+                    </div>
+                    <div class="form-group">
+                        <span>Horse Power:</span>
+                        <input class="form-control" type="number" name="Bhp" placeholder="350" formControlName="horse_power" required/>
+                    </div>
+                    <div class="form-group">
+                        <span>Registration Year:</span>
+                        <input class="form-control" type="number" name="date" formControlName="year" placeholder="2018" required/>
+                    </div>
+                    <div class="form-group">
+                        <span [ngClass]="carMessageClass">{{ carMessage }}</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <input [disabled]="!addCarForm.valid"  class="btn btn-primary" type="submit" value="Add for approval" />
+                </div>
+            </form>
+        
+          </div>
+        </div>
+      </div>

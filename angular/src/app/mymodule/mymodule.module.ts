@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 
 import { MyModuleRoutingModule } from './mymodule.routing'
 
+import { UserService } from '../services/user.service';
 import { UserComponent } from './user/user.component'
 
 @NgModule({
@@ -21,6 +22,7 @@ import { UserComponent } from './user/user.component'
         MyModuleRoutingModule
     ],
     providers: [
+        UserService
         // AuthGuardService,
         // WalletGuardService,
     ]

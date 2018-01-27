@@ -57,7 +57,7 @@ router.post('/details',(req, res) => {
                             if (err)
                                 res.status(500).send(err.toString())
                             else
-                                res.status(200).json({message:"Transaction is proceed.To be completed and listed will need 15 min to 2 hours"});
+                                res.status(200).json("done");
                         }); 
                     });
                 }

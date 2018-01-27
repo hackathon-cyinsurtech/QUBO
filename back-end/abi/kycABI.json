@@ -1,0 +1,165 @@
+[
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "sender",
+				"type": "address"
+			},
+			{
+				"name": "status",
+				"type": "bytes1"
+			}
+		],
+		"name": "setAdminPersonStatus",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "sender",
+				"type": "address"
+			}
+		],
+		"name": "getAdminPersonDetails",
+		"outputs": [
+			{
+				"name": "first_name",
+				"type": "bytes32"
+			},
+			{
+				"name": "last_name",
+				"type": "bytes32"
+			},
+			{
+				"name": "id_number",
+				"type": "bytes32"
+			},
+			{
+				"name": "status",
+				"type": "bytes1"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getAdminPersons",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getPersonStatus",
+		"outputs": [
+			{
+				"name": "status",
+				"type": "bytes1"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "first_name",
+				"type": "bytes32"
+			},
+			{
+				"name": "last_name",
+				"type": "bytes32"
+			},
+			{
+				"name": "id_number",
+				"type": "bytes8"
+			}
+		],
+		"name": "addPersonDetails",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getPersonDetails",
+		"outputs": [
+			{
+				"name": "first_name",
+				"type": "bytes32"
+			},
+			{
+				"name": "last_name",
+				"type": "bytes32"
+			},
+			{
+				"name": "id_number",
+				"type": "bytes32"
+			},
+			{
+				"name": "status",
+				"type": "bytes1"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]

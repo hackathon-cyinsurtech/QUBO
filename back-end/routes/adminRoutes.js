@@ -7,24 +7,25 @@ EthereumTx = require('ethereumjs-tx'),
 BigNumber = require('bignumber.js');
 
 const KycABI = require('../abi/kycABI.json'),
-    public_address = "0x55F6ab5A5d0B82B2513D73D0f72e2b5E95238484";
-    private_key = "f8220dbc4a8c1aad8b5093057d1d77c5e87452706387a011bc1dedd152f0d9e2";
-    kyc_address = "0xa1ce842c7a5db31873099af569474b30d9011ad2";
-    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    public_address = "0x06b248FA21f2dBab24efd15F5a49fA6a6d90A2eD";
+    private_key = "c5719a8ffd3f23d86372d7563fd0202254ba9d7da432d1ed72e08a8fc48980fc";
+    kyc_address = "0xa9336bb2813faad8b35ac58d4050772226290512";
+    web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/"));
 
 
-router.post('/persons', (req, res) => {
+router.get('/persons', (req, res) => {
     var kycContract = new web3.eth.Contract(KycABI, kyc_address); 
     kycContract.methods.getAdminPersons().call({from: public_address}).then(addresses => {
-        if(persons.length > 0) {
+        if(addresses.length > 0) {
             let actions = addresses.map((address) => {
                 if(web3.utils.isAddress(address)) {
                     var kycContract = new web3.eth.Contract(KycABI, kyc_address);
-                    var results = kycContract.methods.getAdminPersonDetails().call().then((details) => {
+                    var results = kycContract.methods.getAdminPersonDetails(address).call().then((details) => {
                         return {
                             first_name: web3.utils.hexToUtf8(details["first_name"]),
                             last_name: web3.utils.hexToUtf8(details["last_name"]),
-                            id_number: web3.utils.hexToUtf8(details["id_number"])
+                            id_number: web3.utils.hexToUtf8(details["id_number"]),
+                            status: web3.utils.hexToUtf8(details["status"])
                         }
                     });
                     return results
@@ -33,7 +34,6 @@ router.post('/persons', (req, res) => {
 
             return Promise.all(actions).then((personslist) => {
                 res.status(200).send(personslist)  
-
             }).catch(error => {
                 res.status(500).send("Error : "+ error)
             })

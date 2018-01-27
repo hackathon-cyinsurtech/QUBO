@@ -7,10 +7,10 @@ var express = require('express'),
     BigNumber = require('bignumber.js');
 
     const KycABI = require('../abi/kycABI.json'),
-        public_address = "0xEA0fab7509A09571C41868da513950FF743745B1";
-        private_key = "62079237e051d2e559153d41fecb14dfca788308ce1b3fbfba51bdce22fa5a71";
-        kyc_address = "0xa1ce842c7a5db31873099af569474b30d9011ad2";
-        web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+        public_address = "0x55F6ab5A5d0B82B2513D73D0f72e2b5E95238484";
+        private_key = "f8220dbc4a8c1aad8b5093057d1d77c5e87452706387a011bc1dedd152f0d9e2";
+        kyc_address = "0xa9336bb2813faad8b35ac58d4050772226290512";
+        web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/"));
 
 router.get('/balance', (req, res) => {
     web3.eth.getBalance(public_address, (err, balance) => {
@@ -24,6 +24,8 @@ router.get('/balance', (req, res) => {
 router.post('/details',(req, res) => {
     var kycContract = new web3.eth.Contract(KycABI, kyc_address); 
     web3.eth.getTransactionCount(public_address, (err, count_val) => {
+        console.log(count_val);
+        return;
         if(err)
             res.status(500).send(err.toString());
         else {
@@ -57,7 +59,7 @@ router.post('/details',(req, res) => {
                             if (err)
                                 res.status(500).send(err.toString())
                             else
-                                res.status(200).json("done");
+                                res.status(200).json({hash:hash});
                         }); 
                     });
                 }
@@ -79,7 +81,8 @@ router.get('/details', (req, res) => {
         res.status(200).json({
             first_name: web3.utils.hexToUtf8(details["first_name"]),
             last_name: web3.utils.hexToUtf8(details["last_name"]),
-            id_number: web3.utils.hexToUtf8(details["id_number"])
+            id_number: web3.utils.hexToUtf8(details["id_number"]),
+            status:  web3.utils.hexToUtf8(details["status"])
         });
     })
 })

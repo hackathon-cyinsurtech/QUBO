@@ -7,15 +7,26 @@ EthereumTx = require('ethereumjs-tx'),
 BigNumber = require('bignumber.js');
 
 const KycABI = require('../abi/kycABI.json'),
-    public_address = "0x06b248FA21f2dBab24efd15F5a49fA6a6d90A2eD";
-    private_key = "c5719a8ffd3f23d86372d7563fd0202254ba9d7da432d1ed72e08a8fc48980fc";
-    kyc_address = "0xa9336bb2813faad8b35ac58d4050772226290512";
+    public_address = "0xEA0fab7509A09571C41868da513950FF743745B1";
+    private_key = "62079237e051d2e559153d41fecb14dfca788308ce1b3fbfba51bdce22fa5a71";
+    kyc_address = "0x47ea99f7b0483104455e95b7b318fb971a3187ae";
     web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/"));
 
+router.get('/person/:address', (req ,res) => {
+    var kycContract = new web3.eth.Contract(KycABI, kyc_address);
+    kycContract.methods.getAdminPersonDetails(req.params.address).call().then((details) => {
+        res.status(200).json({
+            first_name: web3.utils.hexToUtf8(details["first_name"]),
+            last_name: web3.utils.hexToUtf8(details["last_name"]),
+            id_number: web3.utils.hexToUtf8(details["id_number"]),
+            status: web3.utils.hexToUtf8(details["status"])
+        });
+    });
+})
 
 router.get('/persons', (req, res) => {
     var kycContract = new web3.eth.Contract(KycABI, kyc_address); 
-    kycContract.methods.getAdminPersons().call({from: public_address}).then(addresses => {
+    kycContract.methods.getAdminPersons().call().then(addresses => {
         if(addresses.length > 0) {
             let actions = addresses.map((address) => {
                 if(web3.utils.isAddress(address)) {

@@ -9,7 +9,7 @@ var express = require('express'),
     const KycABI = require('../abi/kycABI.json'),
         public_address = "0x55F6ab5A5d0B82B2513D73D0f72e2b5E95238484";
         private_key = "f8220dbc4a8c1aad8b5093057d1d77c5e87452706387a011bc1dedd152f0d9e2";
-        kyc_address = "0xa9336bb2813faad8b35ac58d4050772226290512";
+        kyc_address = "0x47ea99f7b0483104455e95b7b318fb971a3187ae";
         web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/"));
 
 router.get('/balance', (req, res) => {
@@ -24,8 +24,6 @@ router.get('/balance', (req, res) => {
 router.post('/details',(req, res) => {
     var kycContract = new web3.eth.Contract(KycABI, kyc_address); 
     web3.eth.getTransactionCount(public_address, (err, count_val) => {
-        console.log(count_val);
-        return;
         if(err)
             res.status(500).send(err.toString());
         else {

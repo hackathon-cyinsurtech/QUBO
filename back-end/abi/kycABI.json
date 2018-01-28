@@ -1,35 +1,202 @@
 [
 	{
-		"constant": false,
+		"constant": true,
+		"inputs": [],
+		"name": "getCarCount",
+		"outputs": [
+			{
+				"name": "count",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
 		"inputs": [
 			{
 				"name": "sender",
 				"type": "address"
 			},
 			{
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "getInvestorCarDetails",
+		"outputs": [
+			{
+				"name": "brand",
+				"type": "bytes32"
+			},
+			{
+				"name": "model",
+				"type": "bytes32"
+			},
+			{
+				"name": "category",
+				"type": "bytes32"
+			},
+			{
+				"name": "engine_size",
+				"type": "bytes4"
+			},
+			{
+				"name": "horse_power",
+				"type": "bytes8"
+			},
+			{
+				"name": "year",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "sender",
+				"type": "address"
+			}
+		],
+		"name": "getInvestorCarCount",
+		"outputs": [
+			{
+				"name": "count",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "sender",
+				"type": "address"
+			},
+			{
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "getInvestorCarAmounts",
+		"outputs": [
+			{
+				"name": "deposit",
+				"type": "uint256"
+			},
+			{
+				"name": "amount_per_day",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "getCarStatus",
+		"outputs": [
+			{
 				"name": "status",
 				"type": "bytes1"
 			}
 		],
-		"name": "setAdminPersonStatus",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
 		"payable": false,
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
 		"constant": true,
 		"inputs": [],
-		"name": "owner",
+		"name": "getPersonDetails",
+		"outputs": [
+			{
+				"name": "first_name",
+				"type": "bytes32"
+			},
+			{
+				"name": "last_name",
+				"type": "bytes32"
+			},
+			{
+				"name": "id_number",
+				"type": "bytes32"
+			},
+			{
+				"name": "status",
+				"type": "bytes1"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "sender",
+				"type": "address"
+			}
+		],
+		"name": "getAdminCarCount",
+		"outputs": [
+			{
+				"name": "count",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "getCarAmounts",
+		"outputs": [
+			{
+				"name": "deposit",
+				"type": "uint256"
+			},
+			{
+				"name": "amount_per_day",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getAdminPersons",
 		"outputs": [
 			{
 				"name": "",
-				"type": "address"
+				"type": "address[]"
 			}
 		],
 		"payable": false,
@@ -69,12 +236,21 @@
 	},
 	{
 		"constant": true,
-		"inputs": [],
-		"name": "getAdminPersons",
+		"inputs": [
+			{
+				"name": "sender",
+				"type": "address"
+			},
+			{
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "getAdminCarStatus",
 		"outputs": [
 			{
 				"name": "",
-				"type": "address[]"
+				"type": "bytes1"
 			}
 		],
 		"payable": false,
@@ -93,6 +269,227 @@
 		],
 		"payable": false,
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getAdminCarPersons",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "sender",
+				"type": "address"
+			},
+			{
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "getAdminCarExtra",
+		"outputs": [
+			{
+				"name": "engine_size",
+				"type": "bytes4"
+			},
+			{
+				"name": "horse_power",
+				"type": "bytes8"
+			},
+			{
+				"name": "year",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "sender",
+				"type": "address"
+			},
+			{
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "getAdminCarAmounts",
+		"outputs": [
+			{
+				"name": "deposit",
+				"type": "uint256"
+			},
+			{
+				"name": "amount_per_day",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "sender",
+				"type": "address"
+			},
+			{
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "getAdminCarDetails",
+		"outputs": [
+			{
+				"name": "license_plate",
+				"type": "bytes8"
+			},
+			{
+				"name": "brand",
+				"type": "bytes32"
+			},
+			{
+				"name": "model",
+				"type": "bytes32"
+			},
+			{
+				"name": "category",
+				"type": "bytes32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "getCarDetails",
+		"outputs": [
+			{
+				"name": "license_plate",
+				"type": "bytes8"
+			},
+			{
+				"name": "brand",
+				"type": "bytes32"
+			},
+			{
+				"name": "model",
+				"type": "bytes32"
+			},
+			{
+				"name": "category",
+				"type": "bytes32"
+			},
+			{
+				"name": "engine_size",
+				"type": "bytes4"
+			},
+			{
+				"name": "horse_power",
+				"type": "bytes8"
+			},
+			{
+				"name": "year",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "license_plate",
+				"type": "bytes8"
+			},
+			{
+				"name": "brand",
+				"type": "bytes32"
+			},
+			{
+				"name": "model",
+				"type": "bytes32"
+			},
+			{
+				"name": "category",
+				"type": "bytes32"
+			},
+			{
+				"name": "engine_size",
+				"type": "bytes4"
+			},
+			{
+				"name": "horse_power",
+				"type": "bytes8"
+			},
+			{
+				"name": "year",
+				"type": "uint256"
+			}
+		],
+		"name": "addCarDetails",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -123,41 +520,51 @@
 		"type": "function"
 	},
 	{
-		"constant": true,
-		"inputs": [],
-		"name": "getPersonDetails",
-		"outputs": [
+		"constant": false,
+		"inputs": [
 			{
-				"name": "first_name",
-				"type": "bytes32"
+				"name": "sender",
+				"type": "address"
 			},
 			{
-				"name": "last_name",
-				"type": "bytes32"
-			},
-			{
-				"name": "id_number",
-				"type": "bytes32"
+				"name": "index",
+				"type": "uint256"
 			},
 			{
 				"name": "status",
 				"type": "bytes1"
 			}
 		],
+		"name": "setAdminCarStatus",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
 		"payable": false,
-		"stateMutability": "view",
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
 		"constant": false,
 		"inputs": [
 			{
-				"name": "newOwner",
+				"name": "sender",
 				"type": "address"
+			},
+			{
+				"name": "status",
+				"type": "bytes1"
 			}
 		],
-		"name": "transferOwnership",
-		"outputs": [],
+		"name": "setAdminPersonStatus",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"

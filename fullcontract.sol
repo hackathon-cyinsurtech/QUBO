@@ -1,3 +1,143 @@
+/**
+ * @title SafeMath
+ * @dev Math operations with safety checks that throw on error
+ * This library was taken from https://github.com/OpenZeppelin
+ */
+library SafeMath {
+  function mul(uint256 a, uint256 b) internal pure returns (uint256) {
+    if (a == 0) {
+      return 0;
+    }
+    uint256 c = a * b;
+    assert(c / a == b);
+    return c;
+  }
+
+  function div(uint256 a, uint256 b) internal pure returns (uint256) {
+    uint256 c = a / b;
+    return c;
+  }
+
+  function sub(uint256 a, uint256 b) internal pure returns (uint256) {
+    assert(b <= a);
+    return a - b;
+  }
+
+  function add(uint256 a, uint256 b) internal pure returns (uint256) {
+    uint256 c = a + b;
+    assert(c >= a);
+    return c;
+  }
+}
+
+contract Ownable {
+
+  address public owner;
+
+  /**
+   * @dev The Ownable constructor sets the original `owner` of the contract to the sender
+   * account.
+   */
+  function Ownable() {
+    owner = msg.sender;
+  }
+
+  /**
+   * @dev Throws if called by any account other than the owner.
+   */
+  modifier onlyOwner() {
+    require(msg.sender == owner);
+    _;
+  }
+
+  /**
+   * @dev Allows the current owner to transfer control of the contract to a newOwner.
+   * @param newOwner The address to transfer ownership to.
+   */
+  function transferOwnership(address newOwner) onlyOwner {
+    require(newOwner != address(0));
+    owner = newOwner;
+  }
+}
+
+contract KYC is Ownable {
+    mapping(address => PersonDetail) personDetails;
+
+    address[] personAccounts;
+
+    struct PersonDetail {
+        bytes32 first_name;
+        bytes32 last_name;
+        bytes8 id_number;
+        bytes1 status;
+    }
+
+    modifier checkPerson() {
+        require (personDetails[msg.sender].status == 'A');
+        _;
+    } 
+
+    function addPersonDetails(bytes32 first_name, bytes32 last_name, bytes8 id_number) returns(bool) {
+        require(personDetails[msg.sender].id_number == '');
+
+        personDetails[msg.sender].first_name = first_name;
+        personDetails[msg.sender].last_name = last_name;
+        personDetails[msg.sender].id_number = id_number;
+        personDetails[msg.sender].status = 'P';
+
+        if (personDetails[msg.sender].id_number != "") {
+            personAccounts.push(msg.sender);
+        }
+        return true;     
+    }
+
+    function getPersonDetails(address sender) public constant returns(
+         bytes32 first_name, 
+         bytes32 last_name,
+         bytes32 id_number,
+         bytes1 status
+    ) {
+        return (
+            personDetails[sender].first_name,
+            personDetails[sender].last_name,
+            personDetails[sender].id_number,
+            personDetails[sender].status
+        );
+    }
+
+    function getAdminPersonDetails() onlyOwner public constant returns(
+         bytes32 first_name, 
+         bytes32 last_name,
+         bytes32 id_number,
+         bytes1 status
+    ) {
+        return (
+            personDetails[msg.sender].first_name,
+            personDetails[msg.sender].last_name,
+            personDetails[msg.sender].id_number,
+            personDetails[msg.sender].status
+        );
+    }
+
+    function getAdminPersons() onlyOwner view public returns (address[]) {
+        return personAccounts;
+    }
+
+    function setAdminPersonStatus(address sender,bytes1 status) onlyOwner returns(bool) {
+        require(status == 'A' || status == 'R' || status == 'P');
+
+        personDetails[sender].status = status;
+        return true;
+    }
+
+    function getPersonStatus() public constant returns(bytes1 status) {
+        require(personDetails[msg.sender].id_number != '');
+
+        return personDetails[msg.sender].status;
+    }
+
+}
+
 contract KYCar is Ownable, KYC {
     mapping(address => CarDetail[]) carDetails;
     address[] personCarAccounts;

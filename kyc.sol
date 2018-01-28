@@ -29,17 +29,17 @@ contract KYC is Ownable {
         return true;     
     }
 
-    function getPersonDetails(address sender) public constant returns(
+    function getPersonDetails() public constant returns(
          bytes32 first_name, 
          bytes32 last_name,
          bytes32 id_number,
          bytes1 status
     ) {
         return (
-            personDetails[sender].first_name,
-            personDetails[sender].last_name,
-            personDetails[sender].id_number,
-            personDetails[sender].status
+            personDetails[msg.sender].first_name,
+            personDetails[msg.sender].last_name,
+            personDetails[msg.sender].id_number,
+            personDetails[msg.sender].status
         );
     }
 
@@ -57,7 +57,7 @@ contract KYC is Ownable {
         );
     }
 
-    function getAdminPersons() onlyOwner view public returns (address[]) {
+    function getAdminPersons() onlyOwner public returns (address[]) {
         return personAccounts;
     }
 

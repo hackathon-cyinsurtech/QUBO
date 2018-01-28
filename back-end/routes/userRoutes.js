@@ -7,10 +7,15 @@ var express = require('express'),
     BigNumber = require('bignumber.js');
 
     const KycABI = require('../abi/kycABI.json'),
-        public_address = "0x55F6ab5A5d0B82B2513D73D0f72e2b5E95238484";
-        private_key = "f8220dbc4a8c1aad8b5093057d1d77c5e87452706387a011bc1dedd152f0d9e2";
-        kyc_address = "0x47ea99f7b0483104455e95b7b318fb971a3187ae";
+        public_address = "0xDBe308BAbb5c749366fC3dAD6a7797F59340c204";
+        private_key = "0x081cdf7558d7e27eac61d5d95eb06e84612f08786322be3ac939b6f72041244a";
+        kyc_address = "0xf6E6ac3b833927298819910562c01CDDF5618655";
         web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/"));
+
+
+router.get('/publicaddress', (req, res) => {
+    res.status(200).json({public_address:public_address});
+})
 
 router.get('/balance', (req, res) => {
     web3.eth.getBalance(public_address, (err, balance) => {
@@ -21,7 +26,7 @@ router.get('/balance', (req, res) => {
     });
 });
 
-router.post('/details',(req, res) => {
+router.post('/persondetails',(req, res) => {
     var kycContract = new web3.eth.Contract(KycABI, kyc_address); 
     web3.eth.getTransactionCount(public_address, (err, count_val) => {
         if(err)
@@ -32,7 +37,7 @@ router.post('/details',(req, res) => {
                 web3.utils.fromAscii(req.body.last_name), 
                 web3.utils.fromAscii(req.body.id_number)).estimateGas({from: public_address},(error, gasLimit) => {
                 if(err)
-                    res.status(500).send(error.toString());
+                    res.status(500).send("Oops! Something went wrong. Please try again!");
                 else {
                     web3.eth.getGasPrice().then((gasPrice) => {
                         var rawTransactionObj = {
@@ -54,10 +59,11 @@ router.post('/details',(req, res) => {
                         tx.sign(privKey);
                         var serializedTx = tx.serialize();
                         web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'), (err, hash) => {
+                            console.log(err);
                             if (err)
-                                res.status(500).send(err.toString())
+                                res.status(500).send("Oops! Something went wrong. Please try again!");
                             else
-                                res.status(200).json({hash:hash});
+                                res.status(200).json({message:"Great! we will approve you within 24h"})
                         }); 
                     });
                 }
@@ -66,6 +72,154 @@ router.post('/details',(req, res) => {
     });
 });
 
+router.post('/cardetails',(req, res) => {
+    var kycContract = new web3.eth.Contract(KycABI, kyc_address); 
+    web3.eth.getTransactionCount(public_address, (err, count_val) => {
+        if(err)
+            res.status(500).send("Oops! Something went wrong. Please try again!");
+        else {
+            kycContract.methods.addCarDetails(
+                web3.utils.fromAscii(req.body.license_plate),
+                web3.utils.fromAscii(req.body.brand), 
+                web3.utils.fromAscii(req.body.model),
+                web3.utils.fromAscii(req.body.category),
+                web3.utils.fromAscii(req.body.engine_size),
+                web3.utils.fromAscii(req.body.horse_power),
+                req.body.year).estimateGas({from: public_address},(error, gasLimit) => {
+                if(err)
+                    res.status(500).send("Oops! Something went wrong. Please try again!");
+                else {
+                    web3.eth.getGasPrice().then((gasPrice) => {
+                        var rawTransactionObj = {
+                            from: public_address,
+                            to: kyc_address,
+                            nonce: count_val,
+                            gasPrice: web3.utils.toHex(gasPrice.toString()),
+                            gasLimit: web3.utils.toHex(gasLimit.toString()),
+                            value: "0x0",
+                            data : kycContract.methods.addCarDetails(
+                                web3.utils.fromAscii(req.body.license_plate),
+                                web3.utils.fromAscii(req.body.brand), 
+                                web3.utils.fromAscii(req.body.model),
+                                web3.utils.fromAscii(req.body.category),
+                                web3.utils.fromAscii(req.body.engine_size),
+                                web3.utils.fromAscii(req.body.horse_power),
+                                req.body.year
+                            ).encodeABI()
+                        }
+                        var privKey = new Buffer(private_key.toLowerCase().replace('0x', ''), 'hex');
+                        var tx = new EthereumTx(rawTransactionObj);
+        
+                        tx.sign(privKey);
+                        var serializedTx = tx.serialize();
+                        web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'), (err, hash) => {
+                            if (err)
+                                res.status(400).send("Oops! Something went wrong. Please try again!");
+                            else
+                                res.status(200).json({message:"Great! we will approve your car within 24h"})
+                        }); 
+                    });
+                }
+            });
+        }
+    });
+
+});
+
+router.post('/investdetails', (req, res) => {
+     var kycContract = new web3.eth.Contract(KycABI, kyc_address); 
+    web3.eth.getTransactionCount(public_address, (err, count_val) => {
+        if(err)
+            res.status(500).send("Oops! Something went wrong. Please try again!");
+        else {
+            kycContract.methods.addCarDetails(
+                web3.utils.fromAscii(req.body.license_plate),
+                web3.utils.fromAscii(req.body.brand), 
+                web3.utils.fromAscii(req.body.model),
+                web3.utils.fromAscii(req.body.category),
+                web3.utils.fromAscii(req.body.engine_size),
+                web3.utils.fromAscii(req.body.horse_power),
+                req.body.year).estimateGas({from: public_address},(error, gasLimit) => {
+                if(err)
+                    res.status(500).send("Oops! Something went wrong. Please try again!");
+                else {
+                    web3.eth.getGasPrice().then((gasPrice) => {
+                        var rawTransactionObj = {
+                            from: public_address,
+                            to: kyc_address,
+                            nonce: count_val,
+                            gasPrice: web3.utils.toHex(gasPrice.toString()),
+                            gasLimit: web3.utils.toHex(gasLimit.toString()),
+                            value: "0x0",
+                            data : kycContract.methods.addCarDetails(
+                                web3.utils.fromAscii(req.body.license_plate),
+                                web3.utils.fromAscii(req.body.brand), 
+                                web3.utils.fromAscii(req.body.model),
+                                web3.utils.fromAscii(req.body.category),
+                                web3.utils.fromAscii(req.body.engine_size),
+                                web3.utils.fromAscii(req.body.horse_power),
+                                req.body.year
+                            ).encodeABI()
+                        }
+                        var privKey = new Buffer(private_key.toLowerCase().replace('0x', ''), 'hex');
+                        var tx = new EthereumTx(rawTransactionObj);
+        
+                        tx.sign(privKey);
+                        var serializedTx = tx.serialize();
+                        web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'), (err, hash) => {
+                            if (err)
+                                res.status(400).send("Oops! Something went wrong. Please try again!");
+                            else
+                                res.status(200).json({message:"Great! we will approve your car within 24h"})
+                        }); 
+                    });
+                }
+            });
+        }
+    });
+})
+
+router.get('/cardetails', (req, res) => {
+//    index: index,
+//    license_plate: web3.utils.hexToUtf8(carDetails["license_plate"]),
+//    brand: web3.utils.hexToUtf8(carDetails["brand"]),
+//    model: web3.utils.hexToUtf8(carDetails["model"]),
+//    category: web3.utils.hexToUtf8(carDetails["category"]),
+//    engine_size: web3.utils.hexToUtf8(carDetails["engine_size"]),
+//    horse_power: web3.utils.hexToUtf8(carDetails["horse_power"]),
+//    year: carDetails["year"]
+    
+    
+    res.status(200).send([{
+        index: 1,
+        license_plate: "MAB209",
+        brand: "Audi",
+        model: "A1",
+        category: "saloon",
+        engine_size: "1.7L",
+        horse_power: "350",
+        year:2012,
+        deposit: 10,
+        amount_per_day: 0.0047109,
+        status: 'A'
+    },{
+        index: 2,
+        license_plate: "MSB101",
+        brand: "Auid",
+        model: "A5",
+        category: "saloon",
+        engine_size: "2.0",
+        horse_power: "190",
+        year:2012,
+        deposit: 10,
+        amount_per_day: 0.0047109,
+        status: 'A'
+    }])
+    
+    
+});
+
+
 router.get('/status', (req ,res) => {
     var kycContract = new web3.eth.Contract(KycABI, kyc_address);
     kycContract.methods.getPersonStatus().call({from: public_address}).then(status => {
@@ -73,7 +227,8 @@ router.get('/status', (req ,res) => {
     }); 
 });
 
-router.get('/details', (req, res) => {
+
+router.get('/persondetails', (req, res) => {
     var kycContract = new web3.eth.Contract(KycABI, kyc_address);
     kycContract.methods.getPersonDetails().call({from: public_address}).then(details => {
         res.status(200).json({

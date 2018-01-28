@@ -7,9 +7,11 @@ var express = require('express'),
     BigNumber = require('bignumber.js');
 
     const KycABI = require('../abi/kycABI.json'),
-        public_address = "0xDBe308BAbb5c749366fC3dAD6a7797F59340c204";
-        private_key = "0x081cdf7558d7e27eac61d5d95eb06e84612f08786322be3ac939b6f72041244a";
-        kyc_address = "0xf6E6ac3b833927298819910562c01CDDF5618655";
+        InvestABI = require('../abi/investcontract.json'),
+        public_address = "0xDBe308BAbb5c749366fC3dAD6a7797F59340c204",
+        private_key = "0x081cdf7558d7e27eac61d5d95eb06e84612f08786322be3ac939b6f72041244a",
+        kyc_address = "0xf6E6ac3b833927298819910562c01CDDF5618655",
+        invest_address = "0xd0b853c934ef081f0d35716351c8b2ca834b1b51",
         web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/"));
 
 
@@ -127,56 +129,52 @@ router.post('/cardetails',(req, res) => {
 });
 
 router.post('/investdetails', (req, res) => {
-     var kycContract = new web3.eth.Contract(KycABI, kyc_address); 
-    web3.eth.getTransactionCount(public_address, (err, count_val) => {
-        if(err)
-            res.status(500).send("Oops! Something went wrong. Please try again!");
-        else {
-            kycContract.methods.addCarDetails(
-                web3.utils.fromAscii(req.body.license_plate),
-                web3.utils.fromAscii(req.body.brand), 
-                web3.utils.fromAscii(req.body.model),
-                web3.utils.fromAscii(req.body.category),
-                web3.utils.fromAscii(req.body.engine_size),
-                web3.utils.fromAscii(req.body.horse_power),
-                req.body.year).estimateGas({from: public_address},(error, gasLimit) => {
-                if(err)
-                    res.status(500).send("Oops! Something went wrong. Please try again!");
-                else {
-                    web3.eth.getGasPrice().then((gasPrice) => {
-                        var rawTransactionObj = {
-                            from: public_address,
-                            to: kyc_address,
-                            nonce: count_val,
-                            gasPrice: web3.utils.toHex(gasPrice.toString()),
-                            gasLimit: web3.utils.toHex(gasLimit.toString()),
-                            value: "0x0",
-                            data : kycContract.methods.addCarDetails(
-                                web3.utils.fromAscii(req.body.license_plate),
-                                web3.utils.fromAscii(req.body.brand), 
-                                web3.utils.fromAscii(req.body.model),
-                                web3.utils.fromAscii(req.body.category),
-                                web3.utils.fromAscii(req.body.engine_size),
-                                web3.utils.fromAscii(req.body.horse_power),
-                                req.body.year
-                            ).encodeABI()
-                        }
-                        var privKey = new Buffer(private_key.toLowerCase().replace('0x', ''), 'hex');
-                        var tx = new EthereumTx(rawTransactionObj);
-        
-                        tx.sign(privKey);
-                        var serializedTx = tx.serialize();
-                        web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'), (err, hash) => {
-                            if (err)
-                                res.status(400).send("Oops! Something went wrong. Please try again!");
-                            else
-                                res.status(200).json({message:"Great! we will approve your car within 24h"})
-                        }); 
-                    });
-                }
-            });
-        }
-    });
+//     var investContract = new web3.eth.Contract(InvestABI, invest_address); 
+//    web3.eth.getTransactionCount(public_address, (err, count_val) => {
+//        if(err)
+//            res.status(500).send("Oops! Something went wrong. Please try again!");
+//        else {
+//            investContract.methods.addInvest(
+//                req.body.index,
+//                req.body.from,
+//                req.body.duration,
+//                req.body.deposit,
+//                req.body.amount_per_day).estimateGas({from: public_address},(error, gasLimit) => {
+//                if(err)
+//                    res.status(500).send("Oops! Something went wrong. Please try again!");
+//                else {
+//                    web3.eth.getGasPrice().then((gasPrice) => {
+//                        var rawTransactionObj = {
+//                            from: public_address,
+//                            to: invest_address,
+//                            nonce: count_val,
+//                            gasPrice: web3.utils.toHex(gasPrice.toString()),
+//                            gasLimit: web3.utils.toHex(gasLimit.toString()),
+//                            value: "0x0",
+//                            data : investContract.methods.addInvest(
+//                                req.body.index,
+//                                req.body.from,
+//                                req.body.duration,
+//                                req.body.deposit,
+//                                req.body.amount_per_day).encodeABI()
+//                        }
+//                        var privKey = new Buffer(private_key.toLowerCase().replace('0x', ''), 'hex');
+//                        var tx = new EthereumTx(rawTransactionObj);
+//        
+//                        tx.sign(privKey);
+//                        var serializedTx = tx.serialize();
+//                        web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'), (err, hash) => {
+//                            if (err)
+//                                res.status(400).send("Oops! Something went wrong. Please try again!");
+//                            else
+//                                res.status(200).json({message:"Great! we will approve your car within 24h"})
+//                        }); 
+//                    });
+//                }
+//            });
+//        }
+//    });
+    res.status(400).send("Oops! Something went wrong. Please try again!");
 })
 
 router.get('/cardetails', (req, res) => {

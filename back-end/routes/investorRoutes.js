@@ -6,10 +6,11 @@ var express = require('express'),
     EthereumTx = require('ethereumjs-tx'),
     BigNumber = require('bignumber.js');
 
-const KycABI = require('../abi/kycABI.json'),
-    public_address = "0xEA0fab7509A09571C41868da513950FF743745B1";
-    private_key = "0x62079237e051d2e559153d41fecb14dfca788308ce1b3fbfba51bdce22fa5a71";
+const KycABI = require('../abi/kycABI.json'),      
+    public_address = "0xEA0fab7509A09571C41868da513950FF743745B1",
+    private_key = "0x62079237e051d2e559153d41fecb14dfca788308ce1b3fbfba51bdce22fa5a71",
     kyc_address = "0xf6E6ac3b833927298819910562c01CDDF5618655";
+    
     web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/"));
 
 router.get('/publicaddress', (req, res) => {

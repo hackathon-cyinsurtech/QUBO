@@ -181,7 +181,8 @@ import { UserService } from '../../services/user.service'
         var timeDiff = Math.abs(end_date.getTime() - start_date.getTime());
         var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
         const data = {
-            from: this.addInvestForm.get('start_date').value,
+            index_car: 0,
+            from: start_date.getTime(),
             duration: diffDays,
             deposit: 10,
             amount_per_day : 0.00094218

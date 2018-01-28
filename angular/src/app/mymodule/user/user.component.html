@@ -151,7 +151,9 @@ Activate it now</button>
                     <br>
                     <span class="pull-right">Total Insurance Cost: {{ estimation_cost }}</span>
                     <br>
-              
+                    <div class="form-group">
+                        <span [ngClass]="investMessageClass">{{ investMessage }}</span>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -229,7 +231,6 @@ Activate it now</button>
                     <div class="form-group">
                         <span>Car Category:</span>
                         <select class="form-control" formControlName="category" required>
-                            <option value="Category">Selecr My Car Category</option>
                             <option value="Saloon">Saloon</option>
                             <option value="Coupe">Coupe</option>
                             <option value="Convertible">Convertible</option>

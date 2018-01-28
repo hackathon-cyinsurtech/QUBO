@@ -45,7 +45,14 @@ export class AdminService {
 
     approveKYCar (data) {
         return this.http.post(
-            this.apiUrl + '/admin/rejectperson',
+            this.apiUrl + '/admin/approvecar',
+            data
+        ).map(res => res.json());
+    }
+
+    rejectKYCar (data) {
+        return this.http.post(
+            this.apiUrl + '/admin/rejectcar',
             data
         ).map(res => res.json());
     }

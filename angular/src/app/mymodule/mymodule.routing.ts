@@ -3,12 +3,21 @@ import { RouterModule, Routes } from '@angular/router';
 
 
 import { UserComponent } from './user/user.component'
+import { InvestorComponent } from './investor/invest.component'
+import { AdminComponent } from './admin/admin.component'
 
 const routes: Routes = [
     {
-        path: '',
+        path: 'user',
         component: UserComponent
-      
+    },
+    {
+        path: 'investor',
+        component: InvestorComponent
+    },
+    {
+        path: 'admin',
+        component: AdminComponent
     }
 ];
 

@@ -4,14 +4,13 @@ import { FormControl,FormBuilder, FormsModule , FormGroup, Validators } from '@a
 
 import { AdminService } from '../../services/admin.service'
 @Component({
-    selector: 'app-user',
-    templateUrl: './user.component.html',
-    styleUrls: ['./user.component.css']
+    selector: 'app-admin',
+    templateUrl: './admin.component.html'
   })
 
   export class AdminComponent implements OnInit {
-      kycList = [];
-      kycarList = [];
+      personList = [];
+      carList = [];
       investList = [];
     constructor(  
         private adminService: AdminService,
@@ -21,21 +20,23 @@ import { AdminService } from '../../services/admin.service'
     }
 
     ngOnInit() {
-        
+        this.getKYCList();
+        this.getKYCarList();
     }
 
    
     getKYCList() {
-        this.adminService.getKYCList().subscribe(res => {
-            this.kycList = res.kycList
+        this.adminService.getKYCList().subscribe(personList => {
+            console.log(personList);
+            this.personList = personList
         },(err) => {
             console.log(err._body);
         });
     }
 
     getKYCarList() {
-        this.adminService.getKYCarList().subscribe(res => {
-            this.kycarList = res.kycarList
+        this.adminService.getKYCarList().subscribe(carList => {
+            this.carList = carList
         },(err) => {
             console.log(err._body);
         });
@@ -54,8 +55,10 @@ import { AdminService } from '../../services/admin.service'
             address: address,
             status: 'A'
         };
-        this.adminService.approveKYC().subscribe(res => {
-             // change status
+        this.adminService.approveKYC(data).subscribe(res => {
+            for(var c:0; c < this.personList.length; c++) {
+                this.personList[c].status = res.status;
+            }
         },(err) => {
             console.log(err._body);
         });
@@ -67,8 +70,10 @@ import { AdminService } from '../../services/admin.service'
             address: address,
             status: 'R'
         };
-        this.adminService.rejectKYC().subscribe(res => {
-            // change status
+        this.adminService.rejectKYC(data).subscribe(res => {
+            for(var c:0; c < this.personList.length; c++) {
+                this.personList[c].status = res.status;
+            }
         },(err) => {
             console.log(err._body);
         });
@@ -80,8 +85,10 @@ import { AdminService } from '../../services/admin.service'
             index: index,
             status: 'A'
         };
-        this.adminService.approveKYCar().subscribe(res => {
-            // change status
+        this.adminService.approveKYCar(data).subscribe(res => {
+            for(var c:0; c < this.carList.length; c++) {
+                this.carList[c].status = res.status;
+            }
         },(err) => {
             console.log(err._body);
         });
@@ -93,8 +100,10 @@ import { AdminService } from '../../services/admin.service'
             address: address,
             status: 'R'
         };
-        this.adminService.rejectKYCar().subscribe(res => {
-            // change status
+        this.adminService.rejectKYCar(data).subscribe(res => {
+            for(var c:0; c < this.carList.length; c++) {
+                this.carList[c].status = res.status;
+            }
         },(err) => {
             console.log(err._body);
         });

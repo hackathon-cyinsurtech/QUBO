@@ -1,0 +1,167 @@
+<div class="panel panel-brand-bg">
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4">
+                    <!--TODO: ADD this number to contract-->
+                    <p><span>Total insurances</span> <span class="text-primary">2</span></p>
+                    <p><span>Total proccesed policies</span> <span id="totalInsurers" class="text-primary">105</span></p>
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                    <p><span>Total invested amount</span> <span id="totalInvestedAmount" class="text-primary">150 ETH</span></p>
+                    <p><span>Total amount in reserves</span> <span id="totalContractBalance" class="text-primary">1340 ETH</span></p>
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                    <p>
+                        <span>Total paid for the claims</span> 
+                        <span id="totalClaimsPaid" class="text-primary">500ETH</span>
+                    </p>
+                    <p>
+                        <span>Up-to-date profit</span> 
+                        <span id="totalInvestorsCount" class="text-primary">50 ETH</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+
+              <div class="col-xs-12 col-sm-4">
+                    <p><span>Total Users</span> <span id="totalClaimsPaid" class="text-primary">5000</span></p>
+                    <p><span>Total Car on the network</span> <span id="totalInvestorsCount" class="text-primary">150</span></p>
+                </div>
+                 <div class="col-xs-12 col-sm-4">
+                    <p><span>Ongoing Claims: </span><span id="totalClaimsPaid" class="text-primary">500</span></p>
+                    <p><span>Total Car Value the network:</span> <span id="totalInvestorsCount" class="text-primary">15000 ETH</span></p>
+                </div>
+                
+            </div>
+            
+        </div>
+        
+    </div>
+
+    <div class="panel panel-default">
+    <ul class="nav nav-tabs nav-justified">
+    <li role="presentation" class="active"><a href="#KYC" data-toggle="tab">KYC (Know your customer)</a></li>
+    <li role="presentation"><a href="#KYCar" data-toggle="tab">KYCar (Know your car)</a></li>
+    <li role="presentation"><a href="#Insurances" data-toggle="tab">Insurances</a></li>
+    </ul>
+    <div class="panel-body">
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="KYC">
+            <!--KYC Table-->
+                <div class="table-responsive" style="width: 100%;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th valign="top">ID</th>
+                                <th valign="top">First Name</th>
+                                <th valign="top">Lastname</th>
+                                <th valign="top">ID (Itentification Document)</th>
+                                <th valign="top" width="10%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let person of personList" class="info">
+                                <td valign="middle">
+                                    <span class="text-primary-2">
+                                        <a href="https://ropsten.etherscan.io/address/{{ person.address }}" target="_blank">{{ person.address }}</a>
+                                    </span>
+                                </td>
+                                <td valign="middle">tommys</td>
+                                <td valign="middle">daniel</td>
+                                <td valign="middle">999999</td>
+                                
+                                <td *ngIf="person && person.status == 'P'" valign="middle" class="cell-btn has-table-control">
+                                    <button type="button" class="btn btn-primary" (click)="approveKYC(person.address)">Aprove</button>
+                                    <button type="button" class="btn btn-danger"(click)="rejectKYC(person.address)">Reject</button>
+                                </td>
+                                <td valign="middle" *ngIf="person && person.status == 'A'">Approved</td>
+                                <td valign="middle" *ngIf="person && person.status == 'R'">Reject</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                 </div>
+            </div>
+            <div class="tab-pane fade" id="KYCar">
+<!--KYCar-->
+                <div class="table-responsive" style="width: 100%;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th valign="top">ID</th>
+                                <th valign="top">License Plate</th>
+                                <th valign="top">Brand</th>
+                                <th valign="top">Model</th>
+                                <th valign="top">Category</th>
+                                <th valign="top">Engine Size</th>
+                                <th valign="top">Horse Power</th>
+                                <th valign="top">Year</th>
+                                <th valign="top" width="10%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let car of carList" class="info">
+                                <td valign="middle">{{ car.address }}</td>
+                                <td valign="middle">{{ car.license_plate }}</td>
+                                <td valign="middle">{{ car.brand }}</td>
+                                <td valign="middle">{{ car.model }}</td>
+                                <td valign="middle">{{ car.category }}</td>
+                                <td valign="middle">{{ car.engine_size }}</td>
+                                <td valign="middle">{{ car.horse_power }}</td>
+                                <td valign="middle">{{ car.year }}</td>
+
+                                <td *ngIf="car.status == 'P'" valign="middle" class="cell-btn has-table-control">
+                                    <button type="button" class="btn btn-primary" (click)="approveKYCar()">Aprove</button>
+                                    <button type="button" class="btn btn-danger"(click)="rejectKYCar()">Reject</button>
+                                </td>
+                                <td valign="middle" *ngIf="car.status == 'A'">Approved</td>
+                                <td valign="middle" *ngIf="car.status == 'R'">Reject</td>
+                            </tr>
+                   
+                        </tbody>
+                    </table>
+                </div>                    
+            </div>
+            <div class="tab-pane fade" id="Insurances">
+                <div class="table-responsive" style="width: 100%;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th valign="top">ID</th>
+                                <th valign="top">Insurance Company</th>
+                                <th valign="top">Participated pools:</th>
+                                <th valign="top"># Car Insured:</th>
+                                <th valign="top"># People Insured:</th>
+                                <th valign="top">Generated Profit:</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="info">
+                                <td valign="middle"><span class="text-primary-2"><a href="#ETHWalletIDRospen" target="_blank">0x554a...</a></span></td>
+                                <td valign="middle" id="firstname">Gan Direct</td>
+                                <td valign="middle" id="Lastname">10</td>
+                                <td valign="middle" id="totalInsurers_table">1000</td>
+                                <td valign="middle" id="totalInsurers_table">50</td>
+                                <td valign="middle" id="totalInsurers_table">150.5ETH</td>
+                            </tr>
+                            <tr class="info">
+                                <td valign="middle"><span class="text-primary-2"><a href="#ETHWalletIDRospen" target="_blank">0x554a...</a></span></td>
+                                <td valign="middle" id="firstname">KPMG Insurance</td>
+                                <td valign="middle" id="Lastname">10</td>
+                                <td valign="middle" id="totalInsurers_table">1000</td>
+                                <td valign="middle" id="totalInsurers_table">50</td>
+                                <td valign="middle" id="totalInsurers_table">150.5ETH</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>  
+            </div>
+        </div>    
+    </div>
+</div>

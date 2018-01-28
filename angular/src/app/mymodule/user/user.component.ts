@@ -12,10 +12,14 @@ import { UserService } from '../../services/user.service'
   export class UserComponent implements OnInit {
     addPersonForm: FormGroup;
     addCarForm: FormGroup;
+    addInvestForm: FormGroup;
     personMessageClass;
     personMessage;
     carMessageClass;
     carMessage;
+    investMessageClass;
+    investMessage;
+    estimation_cost;
     wallet_address;
     balance;
     personDetails;
@@ -31,12 +35,27 @@ import { UserService } from '../../services/user.service'
     ngOnInit() {
         this.addKYCarForm()
         this.addKYCForm();
+        this.addPersonInvestForm();
         // this.createForm();
         this.getEtherBalance();
         this.getPublic();
         this.getPersonDetails();
         this.getCarDetails();
         // this.getKYCStatus();
+    }
+
+    addPersonInvestForm() {
+        this.addInvestForm =  this.formBuilder.group({
+            car_index: ['', Validators.compose([
+                Validators.required
+            ])],
+            start_date : ['', Validators.compose([
+                Validators.required
+            ])],
+            end_date : ['', Validators.compose([
+                Validators.required
+            ])],
+        });
     }
 
     addKYCForm() {
@@ -143,5 +162,39 @@ import { UserService } from '../../services/user.service'
         });
     }
 
+    estimateAmount() {
+        if( this.addInvestForm.get('car_index').value && this.addInvestForm.get('start_date').value && this.addInvestForm.get('end_date').value) {
+            var start_date = new Date(this.addInvestForm.get('start_date').value);
+            var end_date = new Date(this.addInvestForm.get('end_date').value);
+
+            var timeDiff = Math.abs(end_date.getTime() - start_date.getTime());
+            var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+            
+            this.estimation_cost = diffDays * 0.00094218 
+        }
+    }
+
+    addInvest() {
+        var start_date = new Date(this.addInvestForm.get('start_date').value);
+        var end_date = new Date(this.addInvestForm.get('end_date').value);
+
+        var timeDiff = Math.abs(end_date.getTime() - start_date.getTime());
+        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+        const data = {
+            from: this.addInvestForm.get('start_date').value,
+            duration: diffDays,
+            deposit: 10,
+            amount_per_day : 0.00094218
+        }
+
+        this.userService.addInvestDetails(data).subscribe(res => {
+            this.investMessageClass = 'alert alert-success';
+            this.investMessage = res.message;
+        }, (err) => {
+            this.investMessageClass = 'alert alert-danger';
+            this.investMessage = err._body;
+        })
+
+    }
 
 }

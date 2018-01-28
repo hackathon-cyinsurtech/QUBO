@@ -54,4 +54,11 @@ export class UserService {
             data
         ).map(res => res.json());
     }
+
+    addInvestDetails(data) {
+        return this.http.post(
+            this.apiUrl + '/user/investdetails',
+            data
+        ).map(res => res.json());
+    }
 };

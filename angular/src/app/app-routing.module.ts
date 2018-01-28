@@ -7,14 +7,13 @@ import { PreloadAllModules, Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
     {
         path: '',
-        redirectTo: 'user', pathMatch: 'full',
+        redirectTo: '', pathMatch: 'full',
     },
     {
-        path: 'user',
+        path: '',
         loadChildren: 'app/mymodule/mymodule.module#MyModuleModule'
     }
 ]
-
 
 @NgModule({
     imports: [

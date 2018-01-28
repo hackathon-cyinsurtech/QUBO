@@ -9,9 +9,17 @@ import { MyModuleRoutingModule } from './mymodule.routing'
 import { UserService } from '../services/user.service';
 import { UserComponent } from './user/user.component'
 
+import { AdminService } from '../services/admin.service';
+import { AdminComponent } from './admin/admin.component';
+
+import { InvestorService } from '../services/investor.service'
+import { InvestorComponent } from './investor/invest.component'
+
 @NgModule({
     declarations: [
-        UserComponent
+        UserComponent,
+        AdminComponent,
+        InvestorComponent
 
     ],
     imports: [
@@ -22,7 +30,9 @@ import { UserComponent } from './user/user.component'
         MyModuleRoutingModule
     ],
     providers: [
-        UserService
+        UserService,
+        AdminService,
+        InvestorService
         // AuthGuardService,
         // WalletGuardService,
     ]
